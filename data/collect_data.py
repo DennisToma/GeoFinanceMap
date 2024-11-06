@@ -1,14 +1,14 @@
 import yfinance as yf
 import pandas as pd
 import sqlite3
+import check_tickers
 
-tickers = ['AAPL', 'MSFT'] #, 'GOOGL', 'AMZN', 'TSLA']
+tickers, _ = check_tickers.get_working_tickers()
 start = '2000-01-01'
 end = '2024-01-01'
 db_path = 'data/stock_data.db'
 
 def get_stock_info(tickers, db_path):
-    
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
     
@@ -45,9 +45,13 @@ def get_stock_info(tickers, db_path):
 
 
 def get_historic_data(tickers, start, end, db_path):
-    historic_data = yf.download(tickers, start=start, end=end, progress=False, group_by='ticker')
     
     conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    cursor.execute("DELETE FROM daily_data")
+    
+    historic_data = yf.download(tickers, start=start, end=end, progress=False, group_by='ticker')
     
     for ticker in tickers:
         ticker_data = historic_data[ticker].reset_index()
@@ -65,8 +69,7 @@ def get_historic_data(tickers, start, end, db_path):
         })
 
         ticker_data[['ticker', 'date', 'open', 'close', 'low', 'high', 'volume']].to_sql(
-            'daily_data', conn, if_exists='append', index=False
-        )
+            'daily_data', conn, if_exists='append', index=False)
 
     conn.commit()
     conn.close()
