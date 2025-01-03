@@ -1,18 +1,23 @@
 import yfinance as yf
 import pandas as pd
 import sqlite3
-import check_tickers
+import time
 
-tickers, _ = check_tickers.get_working_tickers()
+with open('data/working_tickers.txt', 'r') as file:
+    tickers = file.readlines()
+    tickers = [ticker.strip() for ticker in tickers]
+    #tickers = tickers[:300]  # Limiting to 10 tickers for testing
 start = '2000-01-01'
 end = '2024-01-01'
 db_path = 'data/stock_data.db'
+print(f"Total number of collecting tickers: {len(tickers)}")
 
 def get_stock_info(tickers, db_path):
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
     
     for ticker in tickers:
+        print(f"Processing {ticker}...  ({tickers.index(ticker)+1}/{len(tickers)})")
         data = yf.Ticker(ticker)
         try:
             row = (
@@ -38,7 +43,8 @@ def get_stock_info(tickers, db_path):
         except KeyError as e:
             print(f"Data for {ticker} is missing key information: {e}")
         except Exception as e:
-            print(f"An error occurred with ticker {ticker}: {e}")
+            print(f"An error occurred with ticker {ticker}: {e}")           
+        time.sleep(1)
 
     conn.commit()
     conn.close()
@@ -54,6 +60,7 @@ def get_historic_data(tickers, start, end, db_path):
     historic_data = yf.download(tickers, start=start, end=end, progress=False, group_by='ticker')
     
     for ticker in tickers:
+        print(f"Processing {ticker}...  ({tickers.index(ticker)+1}/{len(tickers)})")
         ticker_data = historic_data[ticker].reset_index()
         
         ticker_data = ticker_data.drop(columns=['Close'])

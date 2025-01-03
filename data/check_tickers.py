@@ -17,7 +17,7 @@ def get_working_tickers():
     failed_tickers = []
     i = 0
 
-    for ticker, region in zip(df['Ticker'][:100], df['Region'][:100]): #### Limit to 100 for testing ####
+    for ticker, region in zip(df['Ticker'], df['Region']):
         i += 1
         print(f"Processing ticker {i}/{len(df['Ticker'])}: {ticker}")
         try:
@@ -35,11 +35,14 @@ def get_working_tickers():
                 if not data.empty:
                     print("Successful!\n")
                     successful_responses += 1
-                    working_tickers.append(ticker)
-                else:
-                    failed_tickers.append(ticker)
+                    working_tickers.append(ticker_with_suffix)
         
         except Exception as e:
             failed_tickers.append(ticker)
-            
+
+    with open("data\working_tickers.txt", "w") as file:
+        for ticker in working_tickers:
+            file.write(f"{ticker}\n")    
     return working_tickers, failed_tickers
+
+get_working_tickers()
