@@ -14,12 +14,18 @@ ticker_count_daily = cursor.fetchone()[0]
 
 # get daily data of ABBV where year is greater than 2015
 abbv_data = pd.read_sql_query("SELECT * FROM daily_data WHERE ticker='ABBV' AND date >= '2015-01-01'", conn)
-print(abbv_data.head())
 
 conn.close()
 
+print("STOCKS TABLE")
 print(stocks.head())
+print("#" * 50)
+print("DAILY_DATA TABLE")
 print(daily_data.head())
+print("#" * 50)
+print("ABBV DATA")
+print(abbv_data.head())
+print("#" * 50)
 
 size_bytes = os.path.getsize("data/stock_data.db")
 size_mb = size_bytes / (1024 * 1024)
