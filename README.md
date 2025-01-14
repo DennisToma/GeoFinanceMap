@@ -50,6 +50,14 @@ The app will be available at `http://localhost:3000`.
 
 ---
 
+Running the Backend in a seperate terminal:
+
+```bash
+uvicorn backend.main:app --reload
+```
+
+The backend will be available at `http://localhost:8000` and can be tested with `http://127.0.0.1:8000/api/test-db`.
+
 ## Running via Docker
 
 ### Build Docker Image
@@ -100,12 +108,17 @@ The project is organized as follows:
 ```plaintext
 react-app/
 │
+├── backend/ 
+│   ├── database.py/    # database connecter
+│   └── main.py/        # api schnittstelle
+├── data/ 
+│   └── stock_data.db/  # database
 ├── public/               # Static files
 ├── src/                  # Source code
 │   ├── components/       # React components
 │   │   ├── Menu.tsx
 │   │   ├── GeoView1.tsx
-│   │   ├── GeoView2.tsx
+│   │   ├── StockDisplay.tsx
 │   │   ├── GeoView3.tsx
 │   │   └── GraphView.tsx
 │   │

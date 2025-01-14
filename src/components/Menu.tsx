@@ -10,8 +10,8 @@ const Menu: React.FC = () => {
                 <Link to="/geo-1">
                     <button className="menu-button view1">Geographical View</button>
                 </Link>
-                <Link to="/geo-2">
-                    <button className="menu-button view2">Placeholder</button>
+                <Link to="/Stock-2">
+                    <button className="menu-button view2">Stock Display</button>
                 </Link>
                 <Link to="/geo-3">
                     <button className="menu-button view3">Placeholder</button>
