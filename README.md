@@ -6,6 +6,22 @@ This project is a React application that uses **TypeScript**, **SCSS** for styli
 
 ---
 
+## Visualization
+
+Dennis
+Statt Hexagons -> Normale Map mit Zoom auf Kontinent -> Land -> Region oder wie auch immer -> Stadt
+Mapping mit Region -> farbe reines volumen, volumen * price, 
+Ort encoding hinzufügen
+
+Slider um über Monate oder Jahre drüber zu gehen
+Stocks auf einer Region aggregieren
+Volume von der Trading Data <- Farbe der Hexagons
+Hover über Region zeigt  Stocks darin mit ihrem Volumen
+Auf Hexagon drücken -> Stocks darin rechts daneben -> Auf stock drücken -> Popup für Price Chart
+
+Stock auswählen -> Kursverlauf angezeigt bekommen
+
+
 ## Table of Contents
 
 1. [Project Setup](#project-setup)
